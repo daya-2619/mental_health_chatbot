@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nexora Mental Health Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ece5dd;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+        .chat-container {
+            background: #fff;
+            width: 100%;
+            max-width: 400px;
+            height: 600px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            margin-top: 40px;
+        }
+        .chat-header {
+            background: #075e54;
+            color: #fff;
+            padding: 16px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            background: #ece5dd;
+            display: flex;
+            flex-direction: column;
+        }
+        .message {
+            max-width: 75%;
+            margin-bottom: 12px;
+            padding: 10px 16px;
+            border-radius: 18px;
+            font-size: 1em;
+            word-break: break-word;
+            display: inline-block;
+            clear: both;
+        }
+        .user {
+            background: #dcf8c6;
+            align-self: flex-end;
+            color: #222;
+            border-bottom-right-radius: 4px;
+        }
+        .bot {
+            background: #fff;
+            align-self: flex-start;
+            color: #222;
+            border-bottom-left-radius: 4px;
+            border: 1px solid #eee;
+        }
+        .chat-input-area {
+            display: flex;
+            padding: 12px;
+            background: #f7f7f7;
+            border-top: 1px solid #eee;
+        }
+        .chat-input-area input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            outline: none;
+            font-size: 1em;
+        }
+        .chat-input-area button {
+            margin-left: 8px;
+            padding: 10px 18px;
+            border: none;
+            background-color: #075e54;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            Nexora AI Mental Health Chatbot
+        </div>
+        <div class="chat-messages">
+            {% for message in messages %}
+                {% if message.sender == 'user' %}
+                    <div class="message user">
+                        <strong>You:</strong> {{ message.text }}
+                        <div style="font-size:0.8em;color:#888;text-align:right;">{{ message.timestamp }}</div>
+                    </div>
+                {% else %}
+                    <div class="message bot">
+                        <strong>Nexora:</strong> {{ message.text }}
+                        <div style="font-size:0.8em;color:#888;text-align:left;">{{ message.timestamp }}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <form method="post" class="chat-input-area">
+            <input type="text" name="message" placeholder="Type your message here..." required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    <script>
+        // Auto-scroll to the bottom of chat-messages on page load and after each message
+        window.onload = function() {
+            var chatMessages = document.querySelector('.chat-messages');
+            if (chatMessages) {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        };
+    </script>
+</body>
+</html>
